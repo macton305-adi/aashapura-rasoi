@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 const products = [
@@ -7,7 +6,8 @@ const products = [
     id: 1,
     name: "Methi Thepla",
     category: "THEPLA",
-    description: "A Gujarati favourite with aromatic fenugreek and traditional spices.",
+    description:
+      "A Gujarati favourite with aromatic fenugreek and traditional spices.",
     image:
       "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=85",
     tag: "HOUSE FAVOURITE",
@@ -16,7 +16,8 @@ const products = [
     id: 2,
     name: "Palak Thepla",
     category: "THEPLA",
-    description: "A comforting green thepla inspired by homemade Gujarati cooking.",
+    description:
+      "A comforting green thepla inspired by homemade Gujarati cooking.",
     image:
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=85",
     tag: "FRESH & FLAVOURFUL",
@@ -25,7 +26,8 @@ const products = [
     id: 3,
     name: "Masala Khakhra",
     category: "KHAKHRA",
-    description: "A crispy, spiced snack for your chai breaks and evening cravings.",
+    description:
+      "A crispy, spiced snack for your chai breaks and evening cravings.",
     image:
       "https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?auto=format&fit=crop&w=800&q=85",
     tag: "TEA-TIME CLASSIC",
@@ -34,7 +36,8 @@ const products = [
     id: 4,
     name: "Gujarati Tiffin",
     category: "TIFFIN",
-    description: "A homestyle meal concept with roti, sabzi and comforting flavours.",
+    description:
+      "A homestyle meal concept with roti, sabzi and comforting flavours.",
     image:
       "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=85",
     tag: "EVERYDAY COMFORT",
@@ -47,6 +50,36 @@ function App() {
   const [category, setCategory] = useState("ALL");
   const [order, setOrder] = useState([]);
   const [showOrder, setShowOrder] = useState(false);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll("[data-reveal]");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      elements.forEach((element) => {
+        element.classList.add("is-visible");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -35px 0px",
+      },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, [category]);
 
   const visibleProducts =
     category === "ALL"
@@ -61,7 +94,7 @@ function App() {
         return current.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
-            : item
+            : item,
         );
       }
 
@@ -73,11 +106,9 @@ function App() {
     setOrder((current) =>
       current
         .map((item) =>
-          item.id === id
-            ? { ...item, quantity: item.quantity + amount }
-            : item
+          item.id === id ? { ...item, quantity: item.quantity + amount } : item,
         )
-        .filter((item) => item.quantity > 0)
+        .filter((item) => item.quantity > 0),
     );
   }
 
@@ -110,7 +141,7 @@ function App() {
       </header>
 
       <main>
-        <section className="hero" id="home">
+        <section className="hero" id="home" data-reveal>
           <div className="hero-copy">
             <span className="eyebrow">A LITTLE TASTE OF GUJARAT</span>
             <h1>
@@ -131,8 +162,8 @@ function App() {
               </a>
             </div>
             <div className="hero-note">
-              <span className="note-dot" />
-              A preview of the Aashapura Rasoi experience
+              <span className="note-dot" />A preview of the Aashapura Rasoi
+              experience
             </div>
           </div>
 
@@ -153,21 +184,29 @@ function App() {
           </div>
         </section>
 
-        <section className="promise-strip">
-          <div><span>01</span> Gujarati-inspired flavours</div>
-          <div><span>02</span> Snacks & tiffin favourites</div>
-          <div><span>03</span> Order enquiries made simple</div>
+        <section className="promise-strip" data-reveal>
+          <div>
+            <span>01</span> Gujarati-inspired flavours
+          </div>
+          <div>
+            <span>02</span> Snacks & tiffin favourites
+          </div>
+          <div>
+            <span>03</span> Order enquiries made simple
+          </div>
         </section>
 
-        <section className="menu-section section-pad" id="menu">
+        <section className="menu-section section-pad" id="menu" data-reveal>
           <div className="section-heading">
             <div>
               <span className="eyebrow">FROM OUR KITCHEN</span>
-              <h2>A little something <em>for every craving.</em></h2>
+              <h2>
+                A little something <em>for every craving.</em>
+              </h2>
             </div>
             <p>
-              Explore the menu concept. Final products, photographs, pack
-              sizes and prices will be confirmed with the business owner.
+              Explore the menu concept. Final products, photographs, pack sizes
+              and prices will be confirmed with the business owner.
             </p>
           </div>
 
@@ -186,7 +225,12 @@ function App() {
 
           <div className="product-grid">
             {visibleProducts.map((product, index) => (
-              <article className="product-card" key={product.id}>
+              <article
+                className="product-card"
+                key={product.id}
+                data-reveal
+                style={{ "--card-index": index }}
+              >
                 <div className="product-photo">
                   <img src={product.image} alt="" loading="lazy" />
                   <span className="product-tag">{product.tag}</span>
@@ -199,9 +243,11 @@ function App() {
                   <div className="product-bottom">
                     <span className="price-note">Price to be confirmed</span>
                     <button
-                      className={order.some((item) => item.id === product.id)
-                        ? "add-button added"
-                        : "add-button"}
+                      className={
+                        order.some((item) => item.id === product.id)
+                          ? "add-button added"
+                          : "add-button"
+                      }
                       onClick={() => addToOrder(product)}
                     >
                       {order.some((item) => item.id === product.id)
@@ -214,12 +260,12 @@ function App() {
             ))}
           </div>
           <p className="menu-disclaimer">
-            Product descriptions and imagery are illustrative demo content,
-            not a verified catalogue.
+            Product descriptions and imagery are illustrative demo content, not
+            a verified catalogue.
           </p>
         </section>
 
-        <section className="tiffin-section" id="tiffin">
+        <section className="tiffin-section" id="tiffin" data-reveal>
           <div className="tiffin-photo">
             <img
               src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
@@ -229,11 +275,13 @@ function App() {
           </div>
           <div className="tiffin-copy">
             <span className="eyebrow">YOUR HOMESTYLE MEAL MOMENT</span>
-            <h2>A little taste of home, <em>wherever you are.</em></h2>
+            <h2>
+              A little taste of home, <em>wherever you are.</em>
+            </h2>
             <p>
-              Looking for a comforting Gujarati meal? Explore the tiffin
-              service and enquire about meal options, availability and
-              delivery arrangements.
+              Looking for a comforting Gujarati meal? Explore the tiffin service
+              and enquire about meal options, availability and delivery
+              arrangements.
             </p>
             <button
               className="button button-light"
@@ -250,30 +298,54 @@ function App() {
           </div>
         </section>
 
-        <section className="story-section section-pad" id="story">
+        <section className="story-section section-pad" id="story" data-reveal>
           <span className="eyebrow">THE IDEA BEHIND THE FLAVOUR</span>
-          <h2>Simple food. Familiar flavours. <em>A feeling of home.</em></h2>
+          <h2>
+            Simple food. Familiar flavours. <em>A feeling of home.</em>
+          </h2>
           <p>
-            Aashapura Rasoi brings together the idea of Gujarati favourites
-            and homestyle meals. This section can tell the founders' real
-            story once they approve the wording.
+            Aashapura Rasoi brings together the idea of Gujarati favourites and
+            homestyle meals. This section can tell the founders' real story once
+            they approve the wording.
           </p>
-          <span className="story-signoff">Aashapura Rasoi · Mira Road East, Mumbai</span>
+          <span className="story-signoff">
+            Aashapura Rasoi · Mira Road East, Mumbai
+          </span>
         </section>
 
-        <section className="order-steps">
+        <section className="order-steps" data-reveal>
           <div className="section-heading">
             <div>
               <span className="eyebrow">MADE SIMPLE</span>
-              <h2>Your favourites, <em>just a few steps away.</em></h2>
+              <h2>
+                Your favourites, <em>just a few steps away.</em>
+              </h2>
             </div>
           </div>
           <div className="steps-grid">
-            <div><span>01</span><h3>Explore</h3><p>Browse the products and tiffin options.</p></div>
-            <div><span>02</span><h3>Make a selection</h3><p>Add the items you'd like to enquire about.</p></div>
-            <div><span>03</span><h3>Confirm with us</h3><p>Ordering details will be connected after the owner confirms the business number.</p></div>
+            <div>
+              <span>01</span>
+              <h3>Explore</h3>
+              <p>Browse the products and tiffin options.</p>
+            </div>
+            <div>
+              <span>02</span>
+              <h3>Make a selection</h3>
+              <p>Add the items you'd like to enquire about.</p>
+            </div>
+            <div>
+              <span>03</span>
+              <h3>Confirm with us</h3>
+              <p>
+                Ordering details will be connected after the owner confirms the
+                business number.
+              </p>
+            </div>
           </div>
-          <button className="button button-primary" onClick={() => setShowOrder(true)}>
+          <button
+            className="button button-primary"
+            onClick={() => setShowOrder(true)}
+          >
             Review your selection <span>↗</span>
           </button>
         </section>
@@ -288,7 +360,9 @@ function App() {
           </span>
         </a>
         <p>Gujarati-inspired favourites, presented with warmth.</p>
-        <span className="footer-location">Mira Road East · Mumbai, Maharashtra</span>
+        <span className="footer-location">
+          Mira Road East · Mumbai, Maharashtra
+        </span>
         <div className="footer-bottom">
           <span>© 2026 Aashapura Rasoi · Website concept preview</span>
           <span>Made with care ♡</span>
@@ -326,7 +400,9 @@ function App() {
               <div className="empty-order">
                 <span>♡</span>
                 <h3>Your selection is empty</h3>
-                <p>Browse the menu and add something you'd like to enquire about.</p>
+                <p>
+                  Browse the menu and add something you'd like to enquire about.
+                </p>
                 <button
                   className="button button-primary"
                   onClick={() => {
@@ -352,12 +428,16 @@ function App() {
                         <button
                           onClick={() => changeQuantity(item.id, -1)}
                           aria-label={`Remove one ${item.name}`}
-                        >−</button>
+                        >
+                          −
+                        </button>
                         <span>{item.quantity}</span>
                         <button
                           onClick={() => changeQuantity(item.id, 1)}
                           aria-label={`Add one ${item.name}`}
-                        >+</button>
+                        >
+                          +
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -366,15 +446,17 @@ function App() {
                   <strong>Demo preview only</strong>
                   <p>
                     This selection does not place an order. WhatsApp ordering
-                    will be enabled after the business confirms its number
-                    and menu details.
+                    will be enabled after the business confirms its number and
+                    menu details.
                   </p>
                 </div>
                 <button
                   className="button button-primary full-button"
                   onClick={() => {
                     setShowOrder(false);
-                    alert("Demo only — no order has been sent. WhatsApp details will be added after owner approval.");
+                    alert(
+                      "Demo only — no order has been sent. WhatsApp details will be added after owner approval.",
+                    );
                   }}
                 >
                   Preview enquiry flow

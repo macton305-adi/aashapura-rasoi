@@ -511,3 +511,326 @@ h1 em, h2 em { font-weight: 500; }
     transition: none !important;
   }
 }
+
+/* ========================================
+   AASHAPURA RASOI — PREMIUM ANIMATIONS
+   Add at the END of App.css
+======================================== */
+
+/* 1. Smooth entrance animation */
+@keyframes ar-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ar-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ar-soft-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 2. Hero section */
+.hero-copy > * {
+  animation: ar-fade-up 650ms ease-out both;
+}
+
+.hero-copy > *:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.hero-copy > *:nth-child(3) {
+  animation-delay: 150ms;
+}
+
+.hero-copy > *:nth-child(4) {
+  animation-delay: 220ms;
+}
+
+.hero-visual {
+  animation: ar-soft-scale 800ms ease-out both;
+  animation-delay: 120ms;
+}
+
+/* 3. Section headings */
+.section-heading {
+  animation: ar-fade-up 600ms ease-out both;
+}
+
+/* 4. Product cards */
+.product-card {
+  transition:
+    transform 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.product-photo {
+  overflow: hidden;
+}
+
+.product-photo img {
+  transition: transform 400ms ease;
+}
+
+/* Desktop hover effects only */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 32px rgba(37, 58, 34, 0.12);
+  }
+
+  .product-card:hover .product-photo img {
+    transform: scale(1.055);
+  }
+}
+
+/* 5. Buttons and category filters */
+.add-button,
+.nav-order,
+.category,
+.button {
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.add-button:active,
+.nav-order:active,
+.category:active,
+.button:active {
+  transform: scale(0.97);
+}
+
+/* 6. Image and content polish */
+img {
+  -webkit-user-drag: none;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 7. Order modal entrance */
+.modal,
+.order-modal,
+.modal-content {
+  animation: ar-fade-up 240ms ease-out both;
+}
+
+/* 8. Keyboard accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #b58a45;
+  outline-offset: 4px;
+}
+
+/* 9. Mobile performance and touch */
+@media (max-width: 600px) {
+  .product-card {
+    transition: box-shadow 200ms ease;
+  }
+
+  .product-photo img {
+    transition: none;
+  }
+
+  .hero-copy > *,
+  .hero-visual {
+    animation-duration: 450ms;
+  }
+}
+
+/* 10. Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================
+   AASHAPURA RASOI — SCROLL EXPERIENCE
+   Add to the end of App.css
+========================================= */
+
+/* Scroll-triggered section reveals */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Stagger the product cards */
+.product-card[data-reveal] {
+  transition-delay: calc(var(--card-index, 0) * 90ms);
+}
+
+/* Cinematic hero image */
+.hero-visual {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-visual img {
+  transform: scale(1.04);
+  transition: transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+.hero-visual.is-visible img {
+  transform: scale(1);
+}
+
+/* Subtle image depth while hovering */
+@media (hover: hover) and (pointer: fine) {
+  .hero-visual:hover img {
+    transform: scale(1.055);
+  }
+
+  .product-card:hover .product-photo img {
+    transform: scale(1.06);
+  }
+}
+
+/* Product card interaction */
+.product-card {
+  transition:
+    transform 350ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 350ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    transform: translateY(-6px);
+  }
+}
+
+/* Smooth image transitions */
+.product-photo {
+  overflow: hidden;
+}
+
+.product-photo img,
+.tiffin-photo img {
+  transition: transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tiffin-photo:hover img {
+    transform: scale(1.035);
+  }
+}
+
+/* Buttons: refined interaction feedback */
+.button,
+.add-button,
+.nav-order,
+.category,
+.close-button,
+.quantity-control button {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.button:active,
+.add-button:active,
+.nav-order:active,
+.category:active {
+  transform: scale(0.97);
+}
+
+/* Modal entrance */
+.modal-backdrop {
+  animation: ar-backdrop-in 220ms ease-out both;
+}
+
+.order-modal {
+  animation: ar-modal-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: center;
+}
+
+@keyframes ar-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ar-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Respect accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .product-card,
+  .hero-visual img,
+  .product-photo img,
+  .tiffin-photo img,
+  .modal-backdrop,
+  .order-modal,
+  .button,
+  .add-button,
+  .nav-order,
+  .category {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+  }
+}
+
+/* Reduce motion work on small screens */
+@media (max-width: 600px) {
+  [data-reveal] {
+    transform: translate3d(0, 16px, 0);
+    transition-duration: 450ms;
+  }
+
+  .product-card[data-reveal] {
+    transition-delay: 0ms;
+  }
+}
